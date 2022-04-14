@@ -6,7 +6,7 @@ class TimedPlayer:
     def __init__(self, song):
         self.song = song
 
-    def play_lyre(self, countdown: int = 5, debug=False):
+    def play_lyre(self, countdown: int = 5, end_playback_beat=None, debug=False):
         lyre_notes = {("C",2): "z",
                       ("D",2): "x",
                       ("E",2): "c",
@@ -34,6 +34,8 @@ class TimedPlayer:
         time_elapsed = 0
         previous_time = time_elapsed
         for note in self.song.data:
+            if end_playback_beat != None and note.beat >= end_playback_beat:
+                break
             if note.pitch in lyre_notes:
                 beat_time = note.beat / (self.song.bpm / 60)
                 time_elapsed = time.perf_counter() - start_time
@@ -61,7 +63,7 @@ class SmoothPlayer:
     def __init__(self, song):
         self.song = song
 
-    def play_lyre(self, countdown: int = 5, debug=False):
+    def play_lyre(self, countdown: int = 5, end_playback_beat=None, debug=False):
         lyre_notes = {("C",2): "z",
                       ("D",2): "x",
                       ("E",2): "c",
@@ -89,6 +91,8 @@ class SmoothPlayer:
         beat_time = 0
         time_since_last_beat = 0
         for note in self.song.data:
+            if end_playback_beat != None and note.beat >= end_playback_beat:
+                break
             if note.pitch in lyre_notes:
                 time_since_last_beat = time.perf_counter()
                 #init timer (actualized after sleep function)
