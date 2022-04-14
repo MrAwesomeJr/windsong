@@ -40,7 +40,7 @@ class TimedPlayer:
                 if beat_time <= time_elapsed:
                     previous_time = time_elapsed
                     if debug:
-                        print(note,"dt:"+str(time_elapsed-beat_time))
+                        print(note," dt:"+str(time_elapsed - beat_time))
                     keyboard.press(lyre_notes[note.pitch])
                     keyboard.release(lyre_notes[note.pitch])
 
@@ -52,7 +52,7 @@ class TimedPlayer:
                         time_until_beat = beat_time - time_elapsed
 
                     if debug:
-                            print(note,"dt:"+str(time_elapsed-beat_time))
+                        print(note,"dt:"+str(time_elapsed - beat_time))
                     keyboard.press_and_release(lyre_notes[note.pitch])
             elif debug:
                 print(str(note) + " Note Unplayable")
@@ -84,20 +84,21 @@ class SmoothPlayer:
                       ("A",4): "y",
                       ("B",4): "u"}
 
-        keyboard = Controller()
-
         self.song = self.song.sorted_song()
         time.sleep(countdown)
         beat_time = 0
+        time_since_last_beat = 0
         for note in self.song.data:
             if note.pitch in lyre_notes:
+                time_since_last_beat = time.perf_counter()
+                #init timer (actualized after sleep function)
                 previous_beat_time = beat_time
                 beat_time = note.beat / (self.song.bpm / 60)
                 if beat_time > previous_beat_time:
                     time.sleep(beat_time - previous_beat_time)
+                    time_since_last_beat -= time.perf_counter()
                     if debug:
-                            print(note)
-                    keyboard.press(lyre_notes[note.pitch])
-                    keyboard.release(lyre_notes[note.pitch])
+                        print(note," dt:"+str(beat_time - time_since_last_beat))
+                    keyboard.press_and_release(lyre_notes[note.pitch])
             elif debug:
                 print(str(note) + " Note Unplayable")
