@@ -42,7 +42,7 @@ class TimedPlayer:
                 if beat_time <= time_elapsed:
                     previous_time = time_elapsed
                     if debug:
-                        print(note," dt:"+str(time_elapsed - beat_time))
+                        print(note,"dt:"+str(time_elapsed - beat_time))
                     keyboard.press(lyre_notes[note.pitch])
                     keyboard.release(lyre_notes[note.pitch])
 
@@ -102,7 +102,7 @@ class SmoothPlayer:
                     time.sleep(beat_time - previous_beat_time)
                     time_since_last_beat -= time.perf_counter()
                     if debug:
-                        print(note," dt:"+str(beat_time - time_since_last_beat))
+                        print(note,"dt:"+str(beat_time - time_since_last_beat))
                     keyboard.press_and_release(lyre_notes[note.pitch])
             elif debug:
                 print(str(note) + " Note Unplayable")
