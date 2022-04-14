@@ -31,5 +31,5 @@ import songplayer
 file = open("songs/lagtrain_full","r")
 lagtrain = songplayer.converter.text_to_data(file.read())
 
-player = songplayer.TimedPlayer(lagtrain)
-player.play_lyre(countdown=1, end_playback_beat=510, debug=True)
+player = songplayer.TimedPlayer()
+player.play_lyre(lagtrain, countdown=1, end_playback_beat=510, debug=True)

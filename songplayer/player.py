@@ -3,10 +3,10 @@ import keyboard
 
 
 class TimedPlayer:
-    def __init__(self, song):
-        self.song = song
+    def __init__(self):
+        pass
 
-    def play_lyre(self, countdown: int = 5, end_playback_beat=None, debug=False):
+    def play_lyre(self, song, countdown: int = 5, end_playback_beat=None, debug=False):
         lyre_notes = {("C",2): "z",
                       ("D",2): "x",
                       ("E",2): "c",
@@ -28,16 +28,16 @@ class TimedPlayer:
                       ("G",4): "t",
                       ("A",4): "y",
                       ("B",4): "u"}
-        self.song = self.song.sorted_song()
+        song = song.sorted_song()
         time.sleep(countdown)
         start_time = time.perf_counter()
         time_elapsed = 0
         previous_time = time_elapsed
-        for note in self.song.data:
+        for note in song.data:
             if end_playback_beat != None and note.beat >= end_playback_beat:
                 break
             if note.pitch in lyre_notes:
-                beat_time = note.beat / (self.song.bpm / 60)
+                beat_time = note.beat / (song.bpm / 60)
                 time_elapsed = time.perf_counter() - start_time
                 if beat_time <= time_elapsed:
                     previous_time = time_elapsed
@@ -60,10 +60,10 @@ class TimedPlayer:
                 print(str(note) + " Note Unplayable")
 
 class SmoothPlayer:
-    def __init__(self, song):
-        self.song = song
+    def __init__(self):
+        pass
 
-    def play_lyre(self, countdown: int = 5, end_playback_beat=None, debug=False):
+    def play_lyre(self, song, countdown: int = 5, end_playback_beat=None, debug=False):
         lyre_notes = {("C",2): "z",
                       ("D",2): "x",
                       ("E",2): "c",
@@ -86,18 +86,18 @@ class SmoothPlayer:
                       ("A",4): "y",
                       ("B",4): "u"}
 
-        self.song = self.song.sorted_song()
+        song = song.sorted_song()
         time.sleep(countdown)
         beat_time = 0
         time_since_last_beat = 0
-        for note in self.song.data:
+        for note in song.data:
             if end_playback_beat != None and note.beat >= end_playback_beat:
                 break
             if note.pitch in lyre_notes:
                 time_since_last_beat = time.perf_counter()
                 #init timer (actualized after sleep function)
                 previous_beat_time = beat_time
-                beat_time = note.beat / (self.song.bpm / 60)
+                beat_time = note.beat / (song.bpm / 60)
                 if beat_time > previous_beat_time:
                     time.sleep(beat_time - previous_beat_time)
                     time_since_last_beat -= time.perf_counter()
