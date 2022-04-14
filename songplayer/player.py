@@ -30,13 +30,13 @@ class TimedPlayer:
                       ("B",4): "u"}
         self.song = self.song.sorted_song()
         time.sleep(countdown)
-        start_time = time.time()
+        start_time = time.perf_counter()
         time_elapsed = 0
         previous_time = time_elapsed
         for note in self.song.data:
             if note.pitch in lyre_notes:
                 beat_time = note.beat / (self.song.bpm / 60)
-                time_elapsed = time.time() - start_time
+                time_elapsed = time.perf_counter() - start_time
                 if beat_time <= time_elapsed:
                     previous_time = time_elapsed
                     if debug:
@@ -48,7 +48,7 @@ class TimedPlayer:
                     time_until_beat = beat_time - time_elapsed
                     while time_until_beat > 0:
                         time.sleep(time_until_beat / 2)
-                        time_elapsed = time.time() - start_time
+                        time_elapsed = time.perf_counter() - start_time
                         time_until_beat = beat_time - time_elapsed
 
                     if debug:
