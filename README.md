@@ -13,6 +13,7 @@ written in python 3.10
 
 features to consider adding:
 - automatic transposition
-- export to midi support
+- export songs to midi
 - notification for multiple tracks on midi converters
 - potential support for other players
+- file repair for broken song data files
