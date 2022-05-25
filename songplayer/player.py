@@ -104,5 +104,7 @@ class SmoothPlayer:
                     if debug:
                         print(note,"dt:"+str(beat_time - time_since_last_beat))
                     keyboard.press_and_release(lyre_notes[note.pitch])
+                else:
+                    keyboard.press_and_release(lyre_notes[note.pitch])
             elif debug:
                 print(str(note) + " Note Unplayable")
