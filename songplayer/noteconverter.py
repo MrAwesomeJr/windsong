@@ -37,12 +37,12 @@ class KeyboardConverter:
 
 class DrumConverter:
     def __init__(self):
-        self.notes = {"C": choice(["A", "L"]),
-                      "D": choice(["S", "K"]),
-                      "E": "A",
-                      "F": "L",
-                      "G": "S",
-                      "A": "K"}
+        self.notes = {"C": choice(["A", "L"]),  # (ka)
+                      "D": choice(["S", "K"]),  # (don)
+                      "E": "A",  # (left ka)
+                      "F": "L",  # (right ka)
+                      "G": "S",  # (left don)
+                      "A": "K"}  # (right don)
 
         self.constant_notes = {"E": "A",
                                "F": "L",

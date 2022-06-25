@@ -30,6 +30,26 @@ class Song:
     def add_note(self, beat: float, pitch, bar=1):
         self.data.append(self.Note(beat + ((bar - 1) * self.time_signature[0]), pitch))
 
+    def add_drum_note(self, beat: float, note, hand="random", bar=1):
+        # note accepts "don" and "ka"
+        # hand accepts "random", "left" and "right"
+
+        if note == "don":
+            if hand == "random":
+                self.data.append(self.Note(beat + ((bar - 1) * self.time_signature[0]), ("D", 3)))
+            elif hand == "left":
+                self.data.append(self.Note(beat + ((bar - 1) * self.time_signature[0]), ("G", 3)))
+            elif hand == "right":
+                self.data.append(self.Note(beat + ((bar - 1) * self.time_signature[0]), ("A", 3)))
+        elif note == "ka":
+            if hand == "random":
+                self.data.append(self.Note(beat + ((bar - 1) * self.time_signature[0]), ("C", 3)))
+            elif hand == "left":
+                self.data.append(self.Note(beat + ((bar - 1) * self.time_signature[0]), ("E", 3)))
+            elif hand == "right":
+                self.data.append(self.Note(beat + ((bar - 1) * self.time_signature[0]), ("F", 3)))
+
+
     def add_keyboard_note(self, beat, key, bar=0):
         keyboard_notes = {"z": ("C",2),
                       "x": ("D",2),
