@@ -75,7 +75,7 @@ class Song:
 
         self.data.append(self.Note(beat + ((bar - 1) * self.time_signature[0]), keyboard_notes[key]))
 
-    def append_song(self, song, beat_offset=None, beat_offset_relative=0, inherit_bpm=False, inherit_time_signature=False):
+    def append_song(self, song, beat_offset=None, beat_offset_relative=0, inherit_bpm=False, inherit_time_signature=False, sort=True):
         if beat_offset == None:
             #set beat offset to the start of the next bar
             if len(self.data) > 0:
@@ -92,6 +92,12 @@ class Song:
             new_song_note = note
             new_song_note.beat += beat_offset
             self.data.append(new_song_note)
+
+        if sort:
+            self.sort()
+
+    def sort(self):
+        self.data = sorted(self.data, key=lambda note: note.beat)
 
     def sorted_song(self):
         return Song(self.bpm, self.time_signature, sorted(self.data, key=lambda note: note.beat))

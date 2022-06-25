@@ -35,7 +35,7 @@ def data_to_text(song):
     return text
 
 
-def midi_to_data(filename, track=0, truncate_silence=False, transpose_semitones=0, round_beats=False, rounding_precision = 1/8):
+def midi_to_data(filename, track=0, tracks=[], truncate_silence=False, transpose_semitones=0, round_beats=False, rounding_precision = 1/8):
     # round_beats rounds to the nearest given fraction of a beat when converting from ms into beats
     mid = mido.MidiFile(filename)
     bpm = 0
@@ -54,26 +54,55 @@ def midi_to_data(filename, track=0, truncate_silence=False, transpose_semitones=
                 track_indexes.append(index)
 
     song = Song(bpm, time_signature)
-    midi_track = mid.tracks[track]
-    track_time_elapsed = 0
-    key = "C"
-    octave = 0
-    for msg in midi_track:
-        if truncate_silence and len(song.data) == 0:
-            pass
-        else:
-            track_time_elapsed += msg.time
 
-        # msg.note is the scale where 0 is C-2 and 72 is C4
-        # msg.time is the time difference since the last msg or the start in arbitrary "ticks"
-        #see https://mido.readthedocs.io/en/latest/midi_files.html#tempo-and-beat-resolution
-        if msg.type == "note_on":
-            key = keys[(msg.note + transpose_semitones) % 12]
-            octave = (msg.note + transpose_semitones) // 12 - 2
-            beat = track_time_elapsed / mid.ticks_per_beat
-            if round_beats:
-                beat = round(beat / rounding_precision) * rounding_precision
+    if len(tracks) == 0:
+        midi_track = mid.tracks[track]
+        track_time_elapsed = 0
+        key = "C"
+        octave = 0
+        for msg in midi_track:
+            if truncate_silence and len(song.data) == 0:
+                pass
+            else:
+                track_time_elapsed += msg.time
 
-            song.add_note(beat, (key, octave))
+            # msg.note is the scale where 0 is C-2 and 72 is C4
+            # msg.time is the time difference since the last msg or the start in arbitrary "ticks"
+            #see https://mido.readthedocs.io/en/latest/midi_files.html#tempo-and-beat-resolution
+            if msg.type == "note_on":
+                key = keys[(msg.note + transpose_semitones) % 12]
+                octave = (msg.note + transpose_semitones) // 12 - 2
+                beat = track_time_elapsed / mid.ticks_per_beat
+                if round_beats:
+                    beat = round(beat / rounding_precision) * rounding_precision
+
+                song.add_note(beat, (key, octave))
+
+    else:
+        for track_index in tracks:
+            midi_track = mid.tracks[track_index]
+            track_time_elapsed = 0
+            key = "C"
+            octave = 0
+            for msg in midi_track:
+                if truncate_silence and len(song.data) == 0:
+                    pass
+                else:
+                    track_time_elapsed += msg.time
+
+                # msg.note is the scale where 0 is C-2 and 72 is C4
+                # msg.time is the time difference since the last msg or the start in arbitrary "ticks"
+                #see https://mido.readthedocs.io/en/latest/midi_files.html#tempo-and-beat-resolution
+                if msg.type == "note_on":
+                    key = keys[(msg.note + transpose_semitones) % 12]
+                    octave = (msg.note + transpose_semitones) // 12 - 2
+                    beat = track_time_elapsed / mid.ticks_per_beat
+                    if round_beats:
+                        beat = round(beat / rounding_precision) * rounding_precision
+
+                    song.add_note(beat, (key, octave))
+
+            song.sort()
+
 
     return song

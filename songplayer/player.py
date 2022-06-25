@@ -1,6 +1,6 @@
 import time
 import keyboard
-from noteconverter import NoteConverter
+from songplayer.noteconverter import NoteConverter
 
 default_countdown = 5
 
