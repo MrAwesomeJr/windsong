@@ -24,4 +24,4 @@ for i in (5,):
 #song is sorted automatically on play
 
 player = songplayer.TimedPlayer()
-player.play_lyre(lagtrain, countdown=1, end_playback_beat=510, debug=True)
+player.play_keyboard(lagtrain, countdown=1, end_playback_beat=510, debug=True)

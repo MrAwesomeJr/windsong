@@ -20,4 +20,4 @@ star.add_note(14, ("D",3))
 star.add_note(15, ("C",3))
 
 player = songplayer.TimedPlayer()
-player.play_lyre(star, countdown=1, debug=True)
+player.play_keyboard(star, countdown=1, debug=True)

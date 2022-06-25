@@ -25,4 +25,4 @@ for i in (5,6,7,8,11):
 
 player = songplayer.TimedPlayer()
 
-player.play_lyre(rick, countdown=1, debug=True)
+player.play_keyboard(rick, countdown=1, debug=True)

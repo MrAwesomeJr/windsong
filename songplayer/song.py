@@ -30,8 +30,8 @@ class Song:
     def add_note(self, beat: float, pitch, bar=1):
         self.data.append(self.Note(beat + ((bar - 1) * self.time_signature[0]), pitch))
 
-    def add_lyre_note(self, beat, key, bar=0):
-        lyre_notes = {"z": ("C",2),
+    def add_keyboard_note(self, beat, key, bar=0):
+        keyboard_notes = {"z": ("C",2),
                       "x": ("D",2),
                       "c": ("E",2),
                       "v": ("F",2),
@@ -53,7 +53,7 @@ class Song:
                       "y": ("A",4),
                       "u": ("B",4)}
 
-        self.data.append(self.Note(beat + ((bar - 1) * self.time_signature[0]), lyre_notes[key]))
+        self.data.append(self.Note(beat + ((bar - 1) * self.time_signature[0]), keyboard_notes[key]))
 
     def append_song(self, song, beat_offset=None, beat_offset_relative=0, inherit_bpm=False, inherit_time_signature=False):
         if beat_offset == None:

@@ -6,8 +6,8 @@ class TimedPlayer:
     def __init__(self):
         pass
 
-    def play_lyre(self, song, countdown: int = 5, end_playback_beat=None, debug=False):
-        lyre_notes = {("C",2): "z",
+    def play_keyboard(self, song, countdown: int = 5, end_playback_beat=None, debug=False):
+        keyboard_notes = {("C",2): "z",
                       ("D",2): "x",
                       ("E",2): "c",
                       ("F",2): "v",
@@ -36,15 +36,15 @@ class TimedPlayer:
         for note in song.data:
             if end_playback_beat != None and note.beat >= end_playback_beat:
                 break
-            if note.pitch in lyre_notes:
+            if note.pitch in keyboard_notes:
                 beat_time = note.beat / (song.bpm / 60)
                 time_elapsed = time.perf_counter() - start_time
                 if beat_time <= time_elapsed:
                     previous_time = time_elapsed
                     if debug:
                         print(note,"dt:"+str(time_elapsed - beat_time))
-                    keyboard.press(lyre_notes[note.pitch])
-                    keyboard.release(lyre_notes[note.pitch])
+                    keyboard.press(keyboard_notes[note.pitch])
+                    keyboard.release(keyboard_notes[note.pitch])
 
                 else:
                     time_until_beat = beat_time - time_elapsed
@@ -55,7 +55,7 @@ class TimedPlayer:
 
                     if debug:
                         print(note,"dt:"+str(time_elapsed - beat_time))
-                    keyboard.press_and_release(lyre_notes[note.pitch])
+                    keyboard.press_and_release(keyboard_notes[note.pitch])
             elif debug:
                 print(str(note) + " Note Unplayable")
 
@@ -63,8 +63,8 @@ class SmoothPlayer:
     def __init__(self):
         pass
 
-    def play_lyre(self, song, countdown: int = 5, end_playback_beat=None, debug=False):
-        lyre_notes = {("C",2): "z",
+    def play_keyboard(self, song, countdown: int = 5, end_playback_beat=None, debug=False):
+        keyboard_notes = {("C",2): "z",
                       ("D",2): "x",
                       ("E",2): "c",
                       ("F",2): "v",
@@ -93,7 +93,7 @@ class SmoothPlayer:
         for note in song.data:
             if end_playback_beat != None and note.beat >= end_playback_beat:
                 break
-            if note.pitch in lyre_notes:
+            if note.pitch in keyboard_notes:
                 time_since_last_beat = time.perf_counter()
                 #init timer (actualized after sleep function)
                 previous_beat_time = beat_time
@@ -103,8 +103,8 @@ class SmoothPlayer:
                     time_since_last_beat -= time.perf_counter()
                     if debug:
                         print(note,"dt:"+str(beat_time - time_since_last_beat))
-                    keyboard.press_and_release(lyre_notes[note.pitch])
+                    keyboard.press_and_release(keyboard_notes[note.pitch])
                 else:
-                    keyboard.press_and_release(lyre_notes[note.pitch])
+                    keyboard.press_and_release(keyboard_notes[note.pitch])
             elif debug:
                 print(str(note) + " Note Unplayable")
