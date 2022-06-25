@@ -1,4 +1,4 @@
-import random
+from random import choice
 
 
 class KeyboardConverter:
@@ -37,8 +37,8 @@ class KeyboardConverter:
 
 class DrumConverter:
     def __init__(self):
-        self.notes = {"C": random.choice(["A", "L"]),
-                      "D": random.choice(["S", "K"]),
+        self.notes = {"C": choice(["A", "L"]),
+                      "D": choice(["S", "K"]),
                       "E": "A",
                       "F": "L",
                       "G": "S",
