@@ -12,7 +12,8 @@ class TimedPlayer:
     def play_keyboard(self, song, countdown: int = default_countdown, end_playback_beat=None, loops=1, debug=False):
         song = song.sorted_song()
         while loops != 0:
-            time.sleep(countdown)
+            if countdown > 0:
+                time.sleep(countdown)
             start_time = time.perf_counter()
             time_elapsed = 0
             previous_time = time_elapsed
@@ -31,7 +32,7 @@ class TimedPlayer:
                     else:
                         time_until_beat = beat_time - time_elapsed
                         while time_until_beat > 0:
-                            time.sleep(time_until_beat / 2)
+                            # time.sleep(time_until_beat / 2)
                             time_elapsed = time.perf_counter() - start_time
                             time_until_beat = beat_time - time_elapsed
 
@@ -65,7 +66,7 @@ class TimedPlayer:
                     else:
                         time_until_beat = beat_time - time_elapsed
                         while time_until_beat > 0:
-                            time.sleep(time_until_beat / 2)
+                            # time.sleep(time_until_beat / 2)
                             time_elapsed = time.perf_counter() - start_time
                             time_until_beat = beat_time - time_elapsed
 
