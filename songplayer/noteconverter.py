@@ -37,26 +37,31 @@ class KeyboardConverter:
 
 class DrumConverter:
     def __init__(self):
-        self.notes = {"C": choice(["A", "L"]),  # (ka)
-                      "D": choice(["S", "K"]),  # (don)
-                      "E": "A",  # (left ka)
-                      "F": "L",  # (right ka)
-                      "G": "S",  # (left don)
-                      "A": "K"}  # (right don)
+        self.constant_notes = {"E": "A",  # (left ka)
+                               "F": "L",  # (right ka)
+                               "G": "S",  # (left don)
+                               "A": "K"}  # (right don)
 
-        self.constant_notes = {"E": "A",
-                               "F": "L",
-                               "G": "S",
-                               "A": "K"}
+    def random_notes(self, note):
+        if note == "C":
+            return choice(["A", "L"])
+        elif note == "D":
+            return choice(["S", "K"])
+        return ""
 
     def note_to_key(self, note):
-        return self.notes[note[0]]
+        ret = self.random_notes(note[0])
+        if ret != "":
+            return ret
+        else:
+            return self.constant_notes[note[0]]
 
     def key_to_note(self, drum_note):
         for key, value in self.constant_notes:
             if value == drum_note:
                 return value
         return False
+
 
 class NoteConverter:
     def __init__(self):
