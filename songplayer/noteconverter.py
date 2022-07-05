@@ -25,8 +25,22 @@ class KeyboardConverter:
                       ("A",4): "y",
                       ("B",4): "u"}
 
-    def note_to_key(self, note):
-        return self.notes[note]
+    def note_playable(self, pitch, force_octave=False):
+        if pitch in self.notes:
+            return True
+        elif force_octave:
+            if pitch[0] in map(lambda x: x[0], self.notes.keys()):
+                return True
+        return False
+
+    def note_to_key(self, pitch, force_octave=False):
+        if pitch in self.notes:
+            return self.notes[pitch]
+        elif force_octave:
+            if pitch[1] < 2:
+                return self.notes[(pitch[0],2)]
+            elif pitch[1] > 4:
+                return self.notes[(pitch[0],4)]
 
     def key_to_note(self, keyboard_note):
         for key, value in self.notes:
@@ -48,6 +62,11 @@ class DrumConverter:
         elif note == "D":
             return choice(["S", "K"])
         return ""
+
+    def note_playable(self, note):
+        if note.pitch in self.constant_notes or note in ("C","D"):
+            return True
+        return False
 
     def note_to_key(self, note):
         ret = self.random_notes(note[0])

@@ -35,15 +35,13 @@ def data_to_text(song):
     return text
 
 
-def midi_to_data(filename, track=0, tracks=[], truncate_silence=False, transpose_semitones=0, round_beats=False, rounding_precision = 1/8):
+def midi_to_data(filename, track=0, tracks=[], truncate_silence=False, transpose_semitones=0, round_beats=False, rounding_precision = 1/16):
     # round_beats rounds to the nearest given fraction of a beat when converting from ms into beats
     mid = mido.MidiFile(filename)
     bpm = 0
     time_signature = [0,0]
     track_indexes = []
     keys = ["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"]
-    # for file types 1 and 2 there may be a tempo track...?
-    # i literally don't have midi test data to verify this...
     for index, msg in enumerate(mid):
         if msg.is_meta:
             if msg.type == "time_signature":
@@ -68,8 +66,8 @@ def midi_to_data(filename, track=0, tracks=[], truncate_silence=False, transpose
 
             # msg.note is the scale where 0 is C-2 and 72 is C4
             # msg.time is the time difference since the last msg or the start in arbitrary "ticks"
-            #see https://mido.readthedocs.io/en/latest/midi_files.html#tempo-and-beat-resolution
-            if msg.type == "note_on":
+            # see https://mido.readthedocs.io/en/latest/midi_files.html#tempo-and-beat-resolution
+            if msg.type == "note_on" and msg.velocity != 0:
                 key = keys[(msg.note + transpose_semitones) % 12]
                 octave = (msg.note + transpose_semitones) // 12 - 2
                 beat = track_time_elapsed / mid.ticks_per_beat
@@ -92,8 +90,8 @@ def midi_to_data(filename, track=0, tracks=[], truncate_silence=False, transpose
 
                 # msg.note is the scale where 0 is C-2 and 72 is C4
                 # msg.time is the time difference since the last msg or the start in arbitrary "ticks"
-                #see https://mido.readthedocs.io/en/latest/midi_files.html#tempo-and-beat-resolution
-                if msg.type == "note_on":
+                # see https://mido.readthedocs.io/en/latest/midi_files.html#tempo-and-beat-resolution
+                if msg.type == "note_on" and msg.velocity != 0:
                     key = keys[(msg.note + transpose_semitones) % 12]
                     octave = (msg.note + transpose_semitones) // 12 - 2
                     beat = track_time_elapsed / mid.ticks_per_beat
