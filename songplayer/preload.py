@@ -1,6 +1,6 @@
 # a script to "preload" the library to prevent delay when playing an actual song.
-from song import Song
-from player import Player
+from songplayer.song import Song
+from songplayer.player import Player
 
 def preload():
     c = Song(bpm=150)
