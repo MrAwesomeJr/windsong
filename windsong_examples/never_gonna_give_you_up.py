@@ -23,6 +23,6 @@ for i in (5,6,7,8,11):
 
 #song is sorted automatically on play
 
-player = songplayer.TimedPlayer()
+player = songplayer.Player()
 
-player.play_keyboard(rick, countdown=1, debug=True)
+player.play(rick, countdown=1, debug=True)

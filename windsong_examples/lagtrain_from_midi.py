@@ -11,7 +11,7 @@ print("track",1,"created")
 lagtrain.append_song(lagtrain_track, beat_offset=0, inherit_bpm=True, inherit_time_signature=True)
 print("track appended")
 
-for i in (3,4,5,6,7,13,14,15):
+for i in (3, 4, 5, 6, 7, 13, 14, 15):
     lagtrain_track = songplayer.converter.midi_to_data("resources/Lagtrain.mid",
                                                        track=i,
                                                        truncate_silence=False,
@@ -21,7 +21,7 @@ for i in (3,4,5,6,7,13,14,15):
     lagtrain.append_song(lagtrain_track, beat_offset=0, inherit_bpm=True, inherit_time_signature=True)
     print("track appended")
 
-#song is sorted automatically on play
+# song is sorted automatically on play
 
-player = songplayer.TimedPlayer()
-player.play_keyboard(lagtrain, countdown=1, end_playback_beat=510, debug=True)
+player = songplayer.Player()
+player.play(lagtrain, countdown=1, end_playback_beat=510, debug=True)

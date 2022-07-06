@@ -21,7 +21,7 @@ for i in (5,):
     lagtrain.append_song(lagtrain_track, beat_offset=0, inherit_bpm=True, inherit_time_signature=True)
     print("track appended")
 
-#song is sorted automatically on play
+# song is sorted automatically on play
 
-player = songplayer.TimedPlayer()
-player.play_keyboard(lagtrain, countdown=1, end_playback_beat=510, debug=True)
+player = songplayer.Play()
+player.play(lagtrain, countdown=1, end_playback_beat=510, debug=True)
