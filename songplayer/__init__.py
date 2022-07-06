@@ -1,4 +1,4 @@
-from songplayer.player import Player
+from songplayer.player import Player, StaticTimer, RelativeTimer
 import songplayer.converter
 import songplayer.instruments
 from songplayer.song import Song

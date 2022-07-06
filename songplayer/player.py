@@ -54,9 +54,9 @@ class RelativeTimer:
 
 
 class Player:
-    def __init__(self, instrument=instruments.Keyboard(), player=StaticTimer(), output=outputs.KeyPress()):
+    def __init__(self, instrument=instruments.Keyboard(), timer=StaticTimer(), output=outputs.KeyPress()):
         self.instrument = instrument
-        self.player = player
+        self.timer = timer
         self.output = output
 
     def play(self, song, countdown: int = default_countdown, end_playback_beat=None, loops=1, debug=False, **kwargs):
@@ -71,7 +71,7 @@ class Player:
                     break
 
                 if self.instrument.note_playable(note.pitch, **kwargs):
-                    self.player.wait(start_time, index, song, debug)
+                    self.timer.wait(start_time, index, song, debug)
                     self.output.press(self.instrument.note_to_key(note.pitch, **kwargs))
                 elif debug:
                     print(str(note) + " Note Unplayable")
