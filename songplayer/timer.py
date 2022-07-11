@@ -1,4 +1,6 @@
 import time
+import ntplib
+import socket
 
 
 class StaticTimer:
@@ -50,9 +52,9 @@ class RelativeTimer:
                 print(note, "dt:" + str(time_elapsed - beat_time))
 
 
-class NetTimer:
-    def __init__(self):
-        pass
+class NetTimer_OnInit:
+    def __init__(self, addr):
+        self.addr = addr
 
     def wait(self, start_time, note_index, song, debug):
         note = song.data[note_index]
@@ -71,3 +73,6 @@ class NetTimer:
 
             if debug:
                 print(note, "dt:" + str(time_elapsed - beat_time))
+
+class NetTimer:
+    def __init__(self):

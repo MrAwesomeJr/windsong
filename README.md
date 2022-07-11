@@ -7,6 +7,8 @@ At the moment, the library uses keyboard inputs to play music. This, along with 
 dependancies:
 mido
 keyboard
+ntplib
+socket
 
 written in python 3.10
 

@@ -2,10 +2,9 @@
 from songplayer.song import Song
 from songplayer.player import Player
 
-def preload():
-    c = Song(bpm=150)
-    c.add_note(1, ("C", 2))
 
-    player = Player()
+def preload(note=("C", 2), player=Player()):
+    song = Song(bpm=150)
+    song.add_note(1, note)
 
-    player.play(c, countdown=0)
+    player.play(song, countdown=0)

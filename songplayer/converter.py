@@ -17,8 +17,14 @@ def text_to_data(text):
     song = Song(bpm, time_signature)
 
     for line in notes:
-        beat, key, octave = line.split(" ")
-        song.add_note(float(beat), (key,int(octave)))
+        # commenting
+        if line[:2] == "//":
+            continue
+        elif line == "":
+            continue
+        else:
+            beat, key, octave = line.split(" ")
+            song.add_note(float(beat), (key,int(octave)))
 
     return song
 
