@@ -4,7 +4,7 @@ Does not currently support bpm changes, but you can play multiple "songs" in suc
 
 At the moment, the library uses keyboard inputs to play music. This, along with creation of any derivative works (in this case, video or audio featuring the lyre keyboard) treads the border on legality according to HoYoverse's ToS (https://genshin.hoyoverse.com/en/company/terms). Midi files found on the internet are also not always available for free use. Care is advised.
 
-dependancies:
+dependencies:
 mido
 keyboard
 ntplib
