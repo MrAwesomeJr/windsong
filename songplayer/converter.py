@@ -29,7 +29,7 @@ def text_to_data(text):
             beat, key, octave = line.split(" ")
             song.add_note(float(beat), (key,int(octave)))
 
-    converter_logger.info("\tSong converted from text to data")
+    converter_logger.info("Song converted from text to data")
     return song
 
 
@@ -43,7 +43,7 @@ def data_to_text(song):
             beat = note.beat
         text += "\n" + str(beat) + " " + note.pitch[0] + " " + str(note.pitch[1])
 
-    converter_logger.info("\tSong converted from data to text")
+    converter_logger.info("Song converted from data to text")
     return text
 
 
@@ -114,5 +114,5 @@ def midi_to_data(filename, track=0, tracks=[], truncate_silence=False, transpose
 
             song.sort()
 
-    converter_logger.info("\tSong converted from midi to data")
+    converter_logger.info("Song converted from midi to data")
     return song

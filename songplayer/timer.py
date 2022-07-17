@@ -28,7 +28,7 @@ class StaticTimer(BaseTimer):
         beat_time = note.beat / (song.bpm / 60)
 
         if beat_time <= time_elapsed:
-            self.logger.info(f"\t{note} dt:{time_elapsed - beat_time}")
+            self.logger.info(f"{note} dt:{time_elapsed - beat_time}")
 
         else:
             time_until_beat = beat_time - time_elapsed
@@ -36,7 +36,7 @@ class StaticTimer(BaseTimer):
                 time_elapsed = time.perf_counter() - self.start_time
                 time_until_beat = beat_time - time_elapsed
 
-            self.logger.info(f"\t{note} dt:{time_elapsed - beat_time}")
+            self.logger.info(f"{note} dt:{time_elapsed - beat_time}")
 
 
 class RelativeTimer(BaseTimer):
@@ -50,14 +50,14 @@ class RelativeTimer(BaseTimer):
         beat_time = time_elapsed + (note.beat / (song.bpm / 60)) - previous_beat_time
 
         if beat_time <= time_elapsed:
-            self.logger.info(f"\t{note} dt:{time_elapsed - beat_time}")
+            self.logger.info(f"{note} dt:{time_elapsed - beat_time}")
 
         else:
             time_until_beat = beat_time - time_elapsed
             time.sleep(time_until_beat)
             time_elapsed = time.perf_counter() - self.start_time
 
-            self.logger.info(f"\t{note} dt:{time_elapsed - beat_time}")
+            self.logger.info(f"{note} dt:{time_elapsed - beat_time}")
 
 
 class NetTimerOnInit(BaseTimer):
@@ -82,7 +82,7 @@ class NetTimerOnInit(BaseTimer):
         while self.start_time == "":
             self.start_time = s.recv(1024).decode()
         self.start_time = float(self.start_time)
-        self.logger.info(f"\tStart time received of {self.start_time}")
+        self.logger.info(f"Start time received of {self.start_time}")
         s.shutdown(socket.SHUT_RDWR)
         s.close()
 
@@ -92,7 +92,7 @@ class NetTimerOnInit(BaseTimer):
         beat_time = note.beat / (song.bpm / 60)
 
         if beat_time <= time_elapsed:
-            self.logger.info(f"\t{note} dt:{time_elapsed - beat_time}")
+            self.logger.info(f"{note} dt:{time_elapsed - beat_time}")
 
         else:
             time_until_beat = beat_time - time_elapsed
@@ -100,7 +100,7 @@ class NetTimerOnInit(BaseTimer):
                 time_elapsed = time.time() - (self.start_time - self.desync)
                 time_until_beat = beat_time - time_elapsed
 
-            self.logger.info(f"\t{note} dt:{time_elapsed - beat_time}")
+            self.logger.info(f"{note} dt:{time_elapsed - beat_time}")
 
 
 class NetTimer(BaseTimer):
@@ -124,7 +124,7 @@ class NetTimer(BaseTimer):
 
             self.thread = threading.Thread(target=self.ping_loop, args=())
             self.thread.start()
-            self.logger.info("\tPinging thread started")
+            self.logger.info("Pinging thread started")
 
         def get_desync(self):
             if not self.desync_queue.empty():
@@ -147,7 +147,7 @@ class NetTimer(BaseTimer):
                 else:
                     # give time for other threads to run
                     time.sleep(0.1)
-            self.logger.info(f"\tPinging thread ended")
+            self.logger.info(f"Pinging thread ended")
 
         def get_ntp_desync(self):
             c = ntplib.NTPClient()
@@ -176,7 +176,7 @@ class NetTimer(BaseTimer):
                 raise OSError("Operating System not supported.")
 
             ping = ping / 1000.0
-            self.logger.debug(f"\tPing received of {ping}")
+            self.logger.debug(f"Ping received of {ping}")
 
             if result.returncode == 0:
                 self.ping_list.append(ping)
@@ -198,7 +198,7 @@ class NetTimer(BaseTimer):
             if self.received_start.is_set():
                 # blocking request from server
                 self.socket.send(str(current_ping).encode())
-                self.logger.debug(f"\tPing sent of {current_ping}")
+                self.logger.debug(f"Ping sent of {current_ping}")
                 desync = ""
                 while desync == "":
                     desync = self.socket.recv(1024).decode()
@@ -208,7 +208,7 @@ class NetTimer(BaseTimer):
                 else:
                     desync = float(desync)
                     
-                self.logger.debug(f"\tDesync received of {desync}")
+                self.logger.debug(f"Desync received of {desync}")
 
                 if self.desync_queue.full():
                     self.desync_queue.get()
@@ -226,7 +226,7 @@ class NetTimer(BaseTimer):
         while self.start_time == "":
             self.start_time = self.ping.socket.recv(1024).decode()
         self.start_time = float(self.start_time)
-        self.logger.info(f"\tStart time received of {self.start_time}")
+        self.logger.info(f"Start time received of {self.start_time}")
         self.ping.received_start.set()
 
     def end(self):
@@ -238,7 +238,7 @@ class NetTimer(BaseTimer):
         beat_time = note.beat / (song.bpm / 60)
 
         if beat_time <= time_elapsed:
-            self.logger.info(f"\t{note} dt:{time_elapsed - beat_time}")
+            self.logger.info(f"{note} dt:{time_elapsed - beat_time}")
 
         else:
             time_until_beat = beat_time - time_elapsed
@@ -246,4 +246,4 @@ class NetTimer(BaseTimer):
                 time_elapsed = time.time() - (self.start_time - self.ping.get_desync())
                 time_until_beat = beat_time - time_elapsed
 
-            self.logger.info(f"\t{note} dt:{time_elapsed - beat_time}")
+            self.logger.info(f"{note} dt:{time_elapsed - beat_time}")

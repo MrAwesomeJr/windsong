@@ -19,20 +19,20 @@ class Player:
                 time.sleep(countdown)
             self.timer.start()
 
-            self.logger.info(f"\tSong start time: {self.timer.start_time}")
+            self.logger.info(f"Song start time: {self.timer.start_time}")
 
             for index, note in enumerate(song.data):
                 if end_playback_beat is not None and note.beat >= end_playback_beat:
                     break
                 elif note.beat < start_playback_beat:
-                    self.logger.debug(f"\t{note} Note Skipped")
+                    self.logger.debug(f"{note} Note Skipped")
                     continue
 
                 if self.instrument.note_playable(note.pitch, **kwargs):
                     self.timer.wait(index, song)
                     self.output.press(self.instrument.note_to_key(note.pitch, **kwargs))
                 else:
-                    self.logger.debug(f"\t{note} Note Unplayable")
+                    self.logger.debug(f"{note} Note Unplayable")
 
             self.timer.end()
             loops -= 1

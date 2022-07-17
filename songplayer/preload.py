@@ -12,4 +12,4 @@ def preload(note=("C", 2), player=Player()):
 
     player.play(song, countdown=0)
 
-    preload_logger.info("\tLibrary preloaded")
+    preload_logger.info("Library preloaded")

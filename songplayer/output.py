@@ -25,4 +25,4 @@ class Simulator:
         self.logger = logging.getLogger("output")
 
     def press(self, key):
-        self.logger.info(f"\tKey Simulated {key}")
+        self.logger.info(f"Key Simulated {key}")
