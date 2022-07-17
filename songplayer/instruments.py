@@ -1,5 +1,6 @@
 from random import choice
 
+
 class Keyboard:
     def __init__(self):
         self.notes = {("C",2): "z",

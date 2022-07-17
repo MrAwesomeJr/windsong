@@ -24,4 +24,4 @@ for i in (5,):
 # song is sorted automatically on play
 
 player = songplayer.Play()
-player.play(lagtrain, countdown=1, end_playback_beat=510, debug=True)
+player.play(lagtrain, countdown=1, end_playback_beat=510)

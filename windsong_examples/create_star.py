@@ -20,4 +20,4 @@ star.add_note(14, ("D",3))
 star.add_note(15, ("C",3))
 
 player = songplayer.Player()
-player.play(star, countdown=1, debug=True)
+player.play(star, countdown=1)

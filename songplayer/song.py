@@ -1,21 +1,23 @@
 class Song:
     class Note:
         def __init__(self, beat: float, pitch):
-            #pitch is composed of tuple (<key>,<octave>)
+            # pitch is composed of tuple (<key>,<octave>)
             self.beat = beat
             self.pitch = pitch
 
         def __str__(self):
+            string_ljust_spacing = 5
+
             if int(self.beat) == self.beat:
-                return_string = str(int(self.beat)).ljust(20) + str(self.pitch[0]).ljust(3) + str(self.pitch[1])
+                return_string = str(int(self.beat)).ljust(string_ljust_spacing) + str(self.pitch[0]).ljust(3) + str(self.pitch[1])
             else:
-                return_string = str(self.beat).ljust(20) + str(self.pitch[0]).ljust(3) + str(self.pitch[1])
+                return_string = str(self.beat).ljust(string_ljust_spacing) + str(self.pitch[0]).ljust(3) + str(self.pitch[1])
             return return_string
 
     def __init__(self, bpm: float = 60, time_signature=[4, 4], data=None):
         self.bpm = bpm
         self.time_signature = time_signature
-        if data == None:
+        if data is None:
             # apparently you can't initialize empty lists as function default arguments
             self.data = []
         else:
@@ -49,35 +51,35 @@ class Song:
             elif hand == "right":
                 self.data.append(self.Note(beat + ((bar - 1) * self.time_signature[0]), ("F", 3)))
 
-
     def add_keyboard_note(self, beat, key, bar=0):
-        keyboard_notes = {"z": ("C",2),
-                      "x": ("D",2),
-                      "c": ("E",2),
-                      "v": ("F",2),
-                      "b": ("G",2),
-                      "n": ("A",2),
-                      "m": ("B",2),
-                      "a": ("C",3),
-                      "s": ("D",3),
-                      "d": ("E",3),
-                      "f": ("F",3),
-                      "g": ("G",3),
-                      "h": ("A",3),
-                      "j": ("B",3),
-                      "q": ("C",4),
-                      "w": ("D",4),
-                      "e": ("E",4),
-                      "r": ("F",4),
-                      "t": ("G",4),
-                      "y": ("A",4),
-                      "u": ("B",4)}
+        keyboard_notes = {"z": ("C", 2),
+                          "x": ("D", 2),
+                          "c": ("E", 2),
+                          "v": ("F", 2),
+                          "b": ("G", 2),
+                          "n": ("A", 2),
+                          "m": ("B", 2),
+                          "a": ("C", 3),
+                          "s": ("D", 3),
+                          "d": ("E", 3),
+                          "f": ("F", 3),
+                          "g": ("G", 3),
+                          "h": ("A", 3),
+                          "j": ("B", 3),
+                          "q": ("C", 4),
+                          "w": ("D", 4),
+                          "e": ("E", 4),
+                          "r": ("F", 4),
+                          "t": ("G", 4),
+                          "y": ("A", 4),
+                          "u": ("B", 4)}
 
         self.data.append(self.Note(beat + ((bar - 1) * self.time_signature[0]), keyboard_notes[key]))
 
-    def append_song(self, song, beat_offset=None, beat_offset_relative=0, inherit_bpm=False, inherit_time_signature=False, sort=True):
-        if beat_offset == None:
-            #set beat offset to the start of the next bar
+    def append_song(self, song, beat_offset=None, beat_offset_relative=0, inherit_bpm=False,
+                    inherit_time_signature=False, sort=True):
+        if beat_offset is None:
+            # set beat offset to the start of the next bar
             if len(self.data) > 0:
                 beat_offset = self.time_signature[0] * (self.data[-1].beat // self.time_signature[0])
             else:

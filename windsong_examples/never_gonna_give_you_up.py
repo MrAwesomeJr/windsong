@@ -25,4 +25,4 @@ for i in (5,6,7,8,11):
 
 player = songplayer.Player()
 
-player.play(rick, countdown=1, debug=True)
+player.play(rick, countdown=1)
