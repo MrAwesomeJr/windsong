@@ -157,6 +157,7 @@ class NetTimer(BaseTimer):
         def ping_server(self, ip):
             # at the moment songplayer is only used with windows
             # but if i / mihoyo ever decide to update then this is good futureproofing.
+            ping = 0
             if os.name == "nt":
                 result = subprocess.run("ping -n 1 "+ip, capture_output=True, text=True)
                 if result.returncode == 0:
@@ -177,6 +178,8 @@ class NetTimer(BaseTimer):
 
             ping = ping / 1000.0
             self.logger.debug(f"Ping received of {ping}")
+
+            current_ping = ping
 
             if result.returncode == 0:
                 self.ping_list.append(ping)
